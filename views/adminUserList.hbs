@@ -1,0 +1,9 @@
+<H1>Admin Users</H1>
+
+<ul class="people_list">
+    {{#each users}}
+        <li>{{this.userName}} - {{this.createDate}}</li>
+    {{else}}
+        <li class="empty">No content</li>
+    {{/each}}
+</ul>

@@ -12,6 +12,14 @@
     "express": "~4.15.2",
     "hbs": "~4.0.1",
     "morgan": "~1.8.1",
-    "serve-favicon": "~2.4.2"
+    "convict": "~1.5.0",
+    "file-stream-rotator": "~0.0.7",
+    "bluebird": "~3.5.0",
+    "uuid": "*",
+    "bcrypt": "~1.0.2",
+    "appinfoservicemodels": "git+ssh://git@git.sleepaiden.com:service-infrastructure/AppInfoServiceModels.git",
+    "identityservicemodels": "git+ssh://git@git.sleepaiden.com:service-infrastructure/IdentityServiceModels.git",
+    "sleepservicemodels": "git+ssh://git@git.sleepaiden.com:service-infrastructure/sleepservicemodels.git",
+    "metricservicemodels": "git+ssh://git@git.sleepaiden.com:service-infrastructure/metricservicemodels.git"
   }
 }
