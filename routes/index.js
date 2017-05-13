@@ -28,7 +28,13 @@ router.get("/healthy", function(req, res, next) {
 });
 
 router.get('/login', function(req, res, next) {
-    res.render('login', {});
+    res.render('login', {layout: 'layouts/login'});
+});
+
+router.get('/logout', function(req, res, next) {
+    res.clearCookie(authCookieName);
+    res.clearCookie(userNameCookie);
+    res.redirect('/login');
 });
 
 router.post('/login', function (req, res, next) {
@@ -44,7 +50,8 @@ router.post('/login', function (req, res, next) {
         if (user == null) {
             res.render('login', {
                 message: 'Login failed. User does not exist.',
-                userName: userName
+                userName: userName,
+                layout: 'layouts/login'
             });
         } else {
             if (bcrypt.compareSync(password, user.passwordHash)) {
@@ -54,7 +61,8 @@ router.post('/login', function (req, res, next) {
             } else {
                 res.render('login', {
                     message: 'Login failed. Invalid username and password pairs.',
-                    userName: userName
+                    userName: userName,
+                    layout: 'layouts/login'
                 });
             }
         }

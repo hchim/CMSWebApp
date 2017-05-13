@@ -1,9 +1,27 @@
-<H1>Admin Users</H1>
+<h1 class="page-header">Admin User</h1>
 
-<ul class="people_list">
-    {{#each users}}
-        <li>{{this.userName}} - {{this.createDate}}</li>
-    {{else}}
-        <li class="empty">No content</li>
-    {{/each}}
-</ul>
+<h2 class="sub-header">User Lists</h2>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>User Name</th>
+            <th>Create Date</th>
+            <th>Enabled</th>
+            <th>Operations</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each users}}
+            <tr>
+                <td>{{@index}}</td>
+                <td>{{this.userName}}</td>
+                <td>{{this.createDate}}</td>
+                <td>{{this.enabled}}</td>
+                <td>Delete | Edit</td>
+            </tr>
+        {{/each}}
+        </tbody>
+    </table>
+</div>

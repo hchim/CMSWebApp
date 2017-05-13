@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var fs = require('fs');
 var conf = require("./config");
+var hbs = require('hbs');
 
 var index = require('./routes/index');
 var adminUsers = require('./routes/adminusers');
@@ -33,6 +34,7 @@ if (conf.get("env") === "production") {
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+hbs.registerPartials(__dirname + '/views/partials');
 
 app.use(logger('dev'));
 app.use(bodyParser.json());

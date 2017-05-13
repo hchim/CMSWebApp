@@ -3,3 +3,4 @@ log
 *.log
 node_modules/
 modules/
+public/bower_components/
