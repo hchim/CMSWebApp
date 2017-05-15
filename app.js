@@ -13,6 +13,7 @@ var adminUsers = require('./routes/adminusers');
 var home = require('./routes/home');
 var authenticate = require('./middlewares/authenticate');
 var metrics = require('./routes/metrics');
+var hbsHelpers = require('./utils/HBSHelpers');
 
 var app = express();
 
@@ -36,6 +37,7 @@ if (conf.get("env") === "production") {
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 hbs.registerPartials(__dirname + '/views/partials');
+hbsHelpers.registerHelpers(hbs);
 
 app.use(logger('dev'));
 app.use(bodyParser.json());

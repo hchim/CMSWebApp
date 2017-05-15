@@ -31,3 +31,11 @@ function showModal(url) {
         $('#cmsModal').modal('show');
     });
 }
+
+function show(id) {
+    $('#' + id).removeClass('hide').addClass('show');
+}
+
+function hide(id) {
+    $('#' + id).addClass('hide').removeClass('show');
+}

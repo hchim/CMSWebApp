@@ -15,6 +15,7 @@
         <tr>
             <th>#</th>
             <th>Tag</th>
+            <th>Operations</th>
         </tr>
         </thead>
         <tbody>
@@ -22,6 +23,7 @@
             <tr>
                 <td>{{@index}}</td>
                 <td>{{this}}</td>
+                <td><a href="javascript:load('/metrics/{{this}}');">List</a></td>
             </tr>
         {{/each}}
         </tbody>
