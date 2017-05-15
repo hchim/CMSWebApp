@@ -14,24 +14,33 @@ router.get('/', function(req, res, next) {
         .sort({ createDate: -1 })
         .select({ userName: 1, createDate: 1 , enabled: 1})
         .exec(function (err, users) {
-            res.render('adminUserList', { users: users});
+            res.render('admins/list', { users: users});
         });
 });
 
 router.get('/add', function (req, res, next) {
-   res.render('addAdminUser');
+   res.render('admins/add', {
+       layout: 'layouts/modal',
+       title: "Add Admin User",
+       formId: 'addAdminForm',
+       formAction: '/admins'
+   });
 });
 
 router.post('/', function(req, res, next) {
     var AdminUser = mongooseHelper.getModel('AdminUser');
     AdminUser.findOne({ 'userName': req.body.userName }, function (err, user) {
         if (err) {
-            return next(err);
+            return res.json({
+                result: false,
+                message: err.message
+            });
         }
 
         if (user != null) {
-            res.render('addAdminUser', {
-                message: 'User name was already taken.'
+            return res.json({
+                result: false,
+                message: 'User name was already taken.',
             });
         } else {
             var salt = bcrypt.genSaltSync(saltRounds);
@@ -45,10 +54,16 @@ router.post('/', function(req, res, next) {
 
             user.save(function (err, user) {
                 if (err) {
-                    return next(err);
+                    return res.json({
+                        result: false,
+                        message: err.message
+                    });
                 }
 
-                res.redirect('/admins')
+                return res.json({
+                    result: true,
+                    message: 'Successfully created!'
+                })
             });
         }
     });
