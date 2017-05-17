@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mongooseHelper = require('../utils/MongooseHelper');
+var moment = require('moment');
 
 router.get('/:id/raw', function(req, res, next) {
     var Metric = mongooseHelper.getModel('Metric');
@@ -16,8 +17,7 @@ router.get('/:id/raw', function(req, res, next) {
 
 router.get('/', function(req, res, next) {
     var Metric = mongooseHelper.getModel('Metric');
-    Metric.find()
-        .distinct('tag', function(error, metrics) {
+    Metric.distinctMetrics({}, function(error, metrics) {
         if (error) {
             console.log(error)
             return next(error);
@@ -28,9 +28,9 @@ router.get('/', function(req, res, next) {
 
 router.post('/q', function(req, res, next) {
     var Metric = mongooseHelper.getModel('Metric');
-    Metric.find({
+    Metric.distinctMetrics({
         tag: new RegExp(req.body.tag, 'ig')
-    }).distinct('tag', function(error, metrics) {
+    }, function(error, metrics) {
         if (error) return next(error);
         res.render('metrics/list', { metrics: metrics});
     });
@@ -39,22 +39,57 @@ router.post('/q', function(req, res, next) {
 // List the records of the specified tag
 router.get('/:tag', function(req, res, next) {
     var Metric = mongooseHelper.getModel('Metric');
-    var page = 0;
-    if (req.query.page) {
-        page = req.query.page;
-    }
-
-    Metric.find({tag: req.params.tag})
-        .limit(10)
-        .skip(10 * page)
-        .sort({createTime: -1})
-        .exec(function(error, metrics) {
+    Metric.searchMetrics({tag: req.params.tag}, function(error, metrics) {
         if (error) {
-            console.log(error)
             return next(error);
         }
         res.render('metrics/metric_list', { tag: req.params.tag, metrics: metrics});
-    });
+    }, req.query.page, 10);
+});
+
+router.post('/:tag/q', function(req, res, next) {
+    var Metric = mongooseHelper.getModel('Metric');
+    var query = {tag: req.params.tag};
+    if (req.body.appVersion) {
+        query['appVersion'] = req.body.appVersion;
+    }
+    if (req.body.hostname) {
+        query['hostname'] = req.body.hostname;
+    }
+    if (req.body.deviceModel) {
+        query['device.model'] = new RegExp(req.body.deviceModel, 'ig');
+    }
+    if (req.body.osType) {
+        query['os.type'] = new RegExp(req.body.osType, 'ig');
+    }
+
+    if (req.body.time) {
+        var dateTime = new moment(req.body.utcTime);
+        var date = dateTime.toDate();
+        var hour = req.body.hour;
+        if (req.body.rangeType == 'B') {
+            var start = dateTime.add(-hour, 'h').toDate();
+            query['createTime'] = {
+                $gte: start, $lte: date
+            };
+        } else {
+            var end = dateTime.add(hour, 'h').toDate();
+            query['createTime'] = {
+                $gte: date, $lte: end
+            }
+        }
+    }
+
+    Metric.searchMetrics(query, function(error, metrics) {
+            if (error) {
+                return next(error);
+            }
+            res.render('metrics/metric_list', {
+                tag: req.params.tag,
+                body: req.body,
+                metrics: metrics
+            });
+        }, req.query.page, 10);
 });
 
 module.exports = router;

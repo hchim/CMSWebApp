@@ -18,6 +18,7 @@
     "bluebird": "~3.5.0",
     "uuid": "*",
     "bcrypt": "~1.0.2",
+    "moment": "~2.18.1",
     "appinfoservicemodels": "git+ssh://git@git.sleepaiden.com:service-infrastructure/AppInfoServiceModels.git",
     "identityservicemodels": "git+ssh://git@git.sleepaiden.com:service-infrastructure/IdentityServiceModels.git",
     "sleepservicemodels": "git+ssh://git@git.sleepaiden.com:service-infrastructure/sleepservicemodels.git",

@@ -2,8 +2,50 @@
 
 <form class="form-inline" action="/metrics/{{tag}}/q" id="metricQueryForm" method="post">
     <div class="form-group">
-        <label for="inputTag">Tag</label>
-        <input type="text" class="form-control" id="inputTag" name="tag" placeholder="Tag">
+        <label for="inputVersion">App Version</label>
+        <input type="text" class="form-control" id="inputVersion" name="appVersion" placeholder="App Version" value="{{body.appVersion}}">
+    </div>
+    <div class="form-group">
+        <label for="inputHostname">Host</label>
+        <input type="text" class="form-control" id="inputHostname" name="hostname" placeholder="Host" value="{{body.hostname}}">
+    </div>
+    <div class="form-group">
+        <label for="inputDeviceModel">Device Model</label>
+        <input type="text" class="form-control" id="inputDeviceModel" name="deviceModel" placeholder="Device Model" value="{{body.deviceModel}}">
+    </div>
+    <div class="form-group">
+        <label for="inputOSType">OS Type</label>
+        <input type="text" class="form-control" id="inputOSType" name="osType" placeholder="OS Type" value="{{body.osType}}">
+    </div>
+    <div class="form-group">
+        <label>Range:</label>
+        <input id="inputHoursSlider" name="hour" data-slider-id='hoursSlider' type="text" data-slider-min="1" data-slider-max="12" data-slider-step="1" data-slider-value="6"/>
+        <label>Hours</label>
+        <select name="rangeType">
+            <option value="B" selected>Before</option>
+            <option value="A">After</option>
+        </select>
+        <div class='input-group date' id='dateTimePicker'>
+            <input type='datetime' class="form-control" name="time" value="{{body.time}}"/>
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+        </div>
+        <input type="hidden" id="inputUtcTime" name="utcTime" value="{{body.utcTime}}">
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#dateTimePicker').datetimepicker();
+                $('#dateTimePicker').on('dp.change', function (e) {
+                    $('#inputUtcTime').val(e.date.format());
+                });
+
+                $('#inputHoursSlider').slider({
+                    formatter: function(value) {
+                        return 'Current value: ' + value;
+                    }
+                });
+            });
+        </script>
     </div>
     <button type="button" onclick="loadFormResult('metricQueryForm')" class="btn btn-primary">Search</button>
 </form>

@@ -82,3 +82,7 @@ body {
 .main .page-header {
     margin-top: 0;
 }
+
+#hoursSlider {
+    width: 100px;
+}
