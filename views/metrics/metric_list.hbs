@@ -32,23 +32,11 @@
             </span>
         </div>
         <input type="hidden" id="inputUtcTime" name="utcTime" value="{{body.utcTime}}">
-        <script type="text/javascript">
-            $(document).ready(function () {
-                $('#dateTimePicker').datetimepicker();
-                $('#dateTimePicker').on('dp.change', function (e) {
-                    $('#inputUtcTime').val(e.date.format());
-                });
-
-                $('#inputHoursSlider').slider({
-                    formatter: function(value) {
-                        return 'Current value: ' + value;
-                    }
-                });
-            });
-        </script>
     </div>
     <button type="button" onclick="loadFormResult('metricQueryForm')" class="btn btn-primary">Search</button>
 </form>
+
+<canvas id="metricChart" width="800" height="200"></canvas>
 
 <h2 class="sub-header">Metric Lists</h2>
 <div>
@@ -75,3 +63,56 @@
         </tbody>
     </table>
 </div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        //date picker
+        $('#dateTimePicker').datetimepicker();
+        $('#dateTimePicker').on('dp.change', function (e) {
+            $('#inputUtcTime').val(e.date.format());
+        });
+        //slider
+        $('#inputHoursSlider').slider({
+            formatter: function(value) {
+                return 'Current value: ' + value;
+            }
+        });
+        //chart
+        var values = []
+        var now = new Date().getTime();
+        for (var i = 0; i < 144; i++) {
+            var val = {x: new Date(now + (i * 300000)), y: Math.floor((Math.random() * 10) + 1)}
+            values.push(val)
+        }
+        var ctx = $('#metricChart');
+        var metricChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                datasets: [{
+                    label: '5 min Metric',
+                    fill: false,
+                    borderColor: '#DA3838',
+                    borderWidth: 1,
+                    pointRadius: 0.5,
+                    pointHindRadius: 10,
+                    data: values
+                }]
+            },
+            options: {
+                scales: {
+                    xAxes: [{
+                        type: 'time',
+                        time: {
+                            displayFormats: {
+                                hour: 'DD/MM HHA',
+                            },
+                            unit: 'hour',
+                            tooltipFormat: 'll HH:mm'
+                        },
+                        position: 'bottom',
+                    }]
+                }
+            }
+        });
+    });
+</script>

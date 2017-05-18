@@ -17,6 +17,7 @@
   "dependencies": {
     "bootstrap": "~3.3.7",
     "eonasdan-bootstrap-datetimepicker": "~4.17.47",
-    "seiyria-bootstrap-slider": "~9.8.0"
+    "seiyria-bootstrap-slider": "~9.8.0",
+    "chart.js": "~2.5.0"
   }
 }

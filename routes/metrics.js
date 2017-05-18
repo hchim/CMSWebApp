@@ -84,6 +84,7 @@ router.post('/:tag/q', function(req, res, next) {
             if (error) {
                 return next(error);
             }
+
             res.render('metrics/metric_list', {
                 tag: req.params.tag,
                 body: req.body,
