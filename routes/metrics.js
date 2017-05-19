@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var mongooseHelper = require('../utils/MongooseHelper');
 var moment = require('moment');
+var mapFuns = require('metricservicemodels').Map;
+var reduceFuns = require('metricservicemodels').Reduce;
 
 router.get('/:id/raw', function(req, res, next) {
     var Metric = mongooseHelper.getModel('Metric');
@@ -43,7 +45,7 @@ router.get('/:tag', function(req, res, next) {
         if (error) {
             return next(error);
         }
-        res.render('metrics/metric_list', { tag: req.params.tag, metrics: metrics});
+        res.render('metrics/metric_list', { tag: req.params.tag, metrics: metrics, stats: []});
     }, req.query.page, 10);
 });
 
@@ -84,12 +86,31 @@ router.post('/:tag/q', function(req, res, next) {
             if (error) {
                 return next(error);
             }
-
-            res.render('metrics/metric_list', {
-                tag: req.params.tag,
-                body: req.body,
-                metrics: metrics
-            });
+            if (!req.query.page) {
+                Metric.mapReduceQuery(
+                    query,
+                    function (error, results) {
+                        if (error) {
+                            return next(error);
+                        }
+                        res.render('metrics/metric_list', {
+                            tag: req.params.tag,
+                            body: req.body,
+                            metrics: metrics,
+                            stats: results
+                        });
+                    },
+                    mapFuns.metric5MMap,
+                    metrics[0].type == 'time' ? reduceFuns.timeMetricReduce : reduceFuns.countMetricReduce
+                );
+            } else {
+                res.render('metrics/metric_list', {
+                    tag: req.params.tag,
+                    body: req.body,
+                    metrics: metrics,
+                    stats: []
+                });
+            }
         }, req.query.page, 10);
 });
 

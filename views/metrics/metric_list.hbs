@@ -78,12 +78,8 @@
             }
         });
         //chart
-        var values = []
-        var now = new Date().getTime();
-        for (var i = 0; i < 144; i++) {
-            var val = {x: new Date(now + (i * 300000)), y: Math.floor((Math.random() * 10) + 1)}
-            values.push(val)
-        }
+        var values = {{formatMetricStatsResult stats}};
+
         var ctx = $('#metricChart');
         var metricChart = new Chart(ctx, {
             type: 'line',

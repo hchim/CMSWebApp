@@ -1,2 +1,3 @@
-[] Admin user priviledges check
-[] Bootstrap templates
+[ ] Admin user priviledges check
+[X] Bootstrap templates
+[ ] Add pagination for metrics
