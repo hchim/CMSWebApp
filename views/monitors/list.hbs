@@ -1,0 +1,58 @@
+<h1 class="page-header">Monitors</h1>
+
+<button type="button" class="btn btn-primary" onclick="showModal('/monitors/add')">Add</button>
+
+<form class="form-inline" action="/monitors/q" id="monitorQueryForm" method="get">
+    <div class="form-group">
+        <label for="inputName">Name</label>
+        <input type="text" class="form-control" id="inputName" name="name" placeholder="Name">
+    </div>
+    <div class="form-group">
+        <label for="inputTag">Tag</label>
+        <input type="text" class="form-control" id="inputTag" name="tag" placeholder="Tag">
+    </div>
+    <button type="button" onclick="loadFormResult('monitorQueryForm')" class="btn btn-primary">Search</button>
+</form>
+
+<h2 class="sub-header">Monitor Lists</h2>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>statInterval</th>
+            <th>Threshold</th>
+            <th>Last For Time</th>
+            <th>Tag</th>
+            <th>App</th>
+            <th>Host</th>
+            <th>OS</th>
+            <th>Operations</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each monitors}}
+            <tr>
+                <td>{{@index}}</td>
+                <td>{{this.name}}</td>
+                <td>{{this.statInterval}} minutes</td>
+                <td>
+                    {{this.threshold}}
+                    {{#if (eq this.type 'time')}}
+                        ms
+                    {{else}}
+                        times/{{thisstatInterval}}minutes
+                    {{/if}}
+                </td>
+                <td>{{this.lastForTime}}</td>
+                <td>{{this.tag}}</td>
+                <td>{{this.appName}}-{{this.appVersion}}</td>
+                <td>{{this.hostname}}</td>
+                <td>{{this.osName}}</td>
+                <td>Delete | Edit</td>
+            </tr>
+        {{/each}}
+        </tbody>
+    </table>
+</div>

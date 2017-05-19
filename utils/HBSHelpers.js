@@ -22,9 +22,14 @@ function formatMetricStatsResult(results) {
     return output;
 }
 
+function eq(val1, val2) {
+    return val1 == val2;
+}
+
 module.exports = {
     registerHelpers: function(hbs) {
         hbs.registerHelper('renderJson', renderJson),
         hbs.registerHelper('formatMetricStatsResult', formatMetricStatsResult)
+        hbs.registerHelper('eq', eq);
     }
 }

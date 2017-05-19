@@ -1,0 +1,80 @@
+<div class="form-group">
+    <label for="inputName" class="col-sm-3 control-label">Name</label>
+    <div class="col-sm-9">
+        <input type="text" class="form-control" id="inputName" name="name" value="{{name}}" placeholder="name">
+    </div>
+</div>
+<div class="form-group">
+    <label for="inputInterval" class="col-sm-3 control-label">Stat Interval(m)</label>
+    <div class="col-sm-9">
+        <select class="form-control" name="statInterval" id="inputInterval">
+            <option value="1">1 minute</option>
+            <option value="2">2 minute</option>
+            <option value="3">3 minute</option>
+            <option value="4">4 minute</option>
+            <option value="5" selected>5 minute</option>
+            <option value="6">6 minute</option>
+            <option value="7">7 minute</option>
+            <option value="8">8 minute</option>
+            <option value="9">9 minute</option>
+            <option value="10">10 minute</option>
+        </select>
+    </div>
+</div>
+<div class="form-group">
+    <label for="inputThreshold" class="col-sm-3 control-label">Threshold</label>
+    <div class="col-sm-3">
+        <select name="aboveOrBelow" class="form-control">
+            <option value="above">Above</option>
+            <option value="below">Below</option>
+        </select>
+    </div>
+    <div class="col-sm-6">
+        <input type="number" class="form-control" id="inputThreshold" placeholder="Threshold" name="threshold">
+    </div>
+</div>
+<div class="form-group">
+    <label for="inputLastForTime" class="col-sm-3 control-label">Last For(m)</label>
+    <div class="col-sm-9">
+        <select class="form-control" name="lastForTime" id="inputLastForTime">
+            <option value="15">15 minutes</option>
+            <option value="30" selected>half hour</option>
+            <option value="45">45 minutes</option>
+            <option value="60">1 hour</option>
+            <option value="90">1.5 hour</option>
+            <option value="120">2 hours</option>
+        </select>
+    </div>
+</div>
+<div class="form-group">
+    <label for="inputTag" class="col-sm-3 control-label">Tag</label>
+    <div class="col-sm-9">
+        <input type="text" class="form-control" id="inputTag" placeholder="Tag" name="tag">
+    </div>
+</div>
+<div class="form-group">
+    <label for="inputType" class="col-sm-3 control-label">Type</label>
+    <div class="col-sm-9">
+        <select name="type" class="form-control">
+            <option value="time">Time</option>
+            <option value="count">Count</option>
+            <option value="msg">Message</option>
+            <option value="error">Error</option>
+        </select>
+    </div>
+</div>
+<div class="form-group">
+    <label for="inputApp" class="col-sm-3 control-label">App</label>
+    <div class="col-sm-5">
+        <input type="text" class="form-control" id="inputApp" placeholder="App Name" name="appName">
+    </div>
+    <div class="col-sm-4">
+        <input type="text" class="form-control" id="inputVersion" placeholder="App Version" name="appVersion">
+    </div>
+</div>
+<div class="form-group">
+    <label for="inputOSName" class="col-sm-3 control-label">OS</label>
+    <div class="col-sm-9">
+        <input type="text" class="form-control" id="inputOSName" placeholder="OS" name="osName">
+    </div>
+</div>
