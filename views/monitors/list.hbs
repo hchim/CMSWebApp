@@ -50,7 +50,11 @@
                 <td>{{this.appName}}-{{this.appVersion}}</td>
                 <td>{{this.hostname}}</td>
                 <td>{{this.osName}}</td>
-                <td>Delete | Edit | <a href="javascript:load('/monitors/{{this._id}}/detail')">Detail</a></td>
+                <td>
+                    <a href="javascript:load('/monitors/{{this._id}}/del')">Delete</a> |
+                    Edit |
+                    <a href="javascript:load('/monitors/{{this._id}}/detail')">Detail</a>
+                </td>
             </tr>
         {{/each}}
         </tbody>

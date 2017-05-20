@@ -123,6 +123,7 @@ router.get('/add', function (req, res, next) {
 
 router.post('/', function(req, res, next) {
     var Monitor = mongooseHelper.getModel('Monitor');
+    var Task = mongooseHelper.getModel('Task');
     var monitor = new Monitor({
         name: req.body.name,
         statInterval: req.body.statInterval,
@@ -142,11 +143,48 @@ router.post('/', function(req, res, next) {
                 message: err.message
             });
         }
+        var task = new Task({
+            _monitor: monitor._id,
+            nextExecuteTime: new Date(),
+            status: 'ready',
+            isActive: true
+        });
 
-        return res.json({
-            result: true,
-            message: 'Successfully created!'
-        })
+        task.save(function (err, task) {
+            if (err) {
+                return res.json({
+                    result: false,
+                    message: err.message
+                });
+            }
+
+            return res.json({
+                result: true,
+                message: 'Successfully created!'
+            })
+        });
+    });
+});
+
+router.get('/:id/del', function(req, res, next) {
+    var Monitor = mongooseHelper.getModel('Monitor');
+    var Task = mongooseHelper.getModel('Task');
+
+    Monitor.findOneAndRemove({_id: req.params.id}, function (err, monitor, raw) {
+       if (err) {
+           return next(err);
+       }
+
+       if (monitor) {
+           Task.deleteOne({_monitor: monitor._id}, function (err, raw) {
+               if (err) {
+                   return next(err);
+               }
+               res.redirect('/monitors');
+           });
+       } else {
+           return next({message: 'Monitor not found.'})
+       }
     });
 });
 

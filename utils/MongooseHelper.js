@@ -53,6 +53,7 @@ module.exports = {
             conn = connections[METRIC_DB] = mongoose.connection.useDb(METRIC_DB);
             models['Metric'] = require('metricservicemodels').Metric(conn);
             models['Monitor'] = require('metricservicemodels').Monitor(conn);
+            models['Task'] = require('metricservicemodels').Task(conn);
         });
     },
     getCMSConn : function() { return connections[CMS_DB] },
