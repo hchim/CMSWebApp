@@ -1,0 +1,73 @@
+<h1 class="page-header">Monitor : {{monitor.name}}</h1>
+
+<form class="form-inline" action="/monitors/{{monitor._id}}/detail" id="monitorQueryForm" method="post">
+    <div class="form-group">
+        <label>Time Range</label>
+        <div class='input-group date' id='fromDateTimePicker'>
+            <input type='datetime' class="form-control" name="fromTime" value="{{body.fromTime}}"/>
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+        </div>
+        <input type="hidden" id="inputFromUtcTime" name="fromUTCTime" value="{{body.fromUTCTime}}">
+        <label>-</label>
+        <div class='input-group date' id='toDateTimePicker'>
+            <input type='datetime' class="form-control" name="toTime" value="{{body.toTime}}"/>
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+        </div>
+        <input type="hidden" id="inputToUtcTime" name="toUTCTime" value="{{body.toUTCTime}}">
+    </div>
+    <button type="button" onclick="loadFormResult('monitorQueryForm')" class="btn btn-primary">Search</button>
+</form>
+
+<canvas id="metricChart" width="800" height="200"></canvas>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        //date picker
+        $('#fromDateTimePicker').datetimepicker();
+        $('#fromDateTimePicker').on('dp.change', function (e) {
+            $('#inputFromUtcTime').val(e.date.format());
+        });
+        $('#toDateTimePicker').datetimepicker();
+        $('#toDateTimePicker').on('dp.change', function (e) {
+            $('#inputToUtcTime').val(e.date.format());
+        });
+
+        //chart
+        var values = {{formatMetricStatsResult stats}};
+
+        var ctx = $('#metricChart');
+        var metricChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                datasets: [{
+                    label: '5 min Metric',
+                    fill: false,
+                    borderColor: '#DA3838',
+                    borderWidth: 1,
+                    pointRadius: 0.5,
+                    pointHindRadius: 10,
+                    data: values
+                }]
+            },
+            options: {
+                scales: {
+                    xAxes: [{
+                        type: 'time',
+                        time: {
+                            displayFormats: {
+                                hour: 'DD/MM HHA',
+                            },
+                            unit: 'hour',
+                            tooltipFormat: 'll HH:mm'
+                        },
+                        position: 'bottom',
+                    }]
+                }
+            }
+        });
+    });
+</script>

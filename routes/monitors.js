@@ -1,8 +1,10 @@
 var express = require('express');
 var router = express.Router();
 var mongooseHelper = require('../utils/MongooseHelper');
+var moment = require('moment');
+var mapFuns = require('metricservicemodels').Map;
+var reduceFuns = require('metricservicemodels').Reduce;
 
-/* GET users listing. */
 router.get('/', function(req, res, next) {
     var Monitor = mongooseHelper.getModel('Monitor');
     Monitor.searchMonitors({},
@@ -13,6 +15,83 @@ router.get('/', function(req, res, next) {
         10
     );
 });
+
+var bestTimeUnit = function (fromTime, toTime) {
+    var span = toTime.getTime() - fromTime.getTime();
+    var aDay = 24 * 60 * 60 * 1000;
+    if (span <= (2 * aDay)) { // <= 2 days
+        return 'hour';
+    } else if (span <= (2 * 7 * aDay)) { // <= 2 weeks
+        return 'day'
+    } else if (span <= (2 * 30 * 7 * aDay)) { // <= 2 months
+        return 'week'
+    } else {
+        return 'month'
+    }
+};
+
+var loadMonitorResult = function(req, res, next) {
+    var Monitor = mongooseHelper.getModel('Monitor');
+    var Metric = mongooseHelper.getModel('Metric');
+    Monitor.findOne({_id: req.params.id},
+        function (err, monitor) {
+            if (err) {
+                return next(err);
+            }
+            if (!monitor) {
+                err = {message: 'Monitor not found!'}
+                return next(err);
+            }
+
+            var query = {tag: monitor.tag};
+            if (monitor.appName) {
+                query['appName'] = monitor.appName;
+            }
+            if (monitor.appVersion) {
+                query['appVersion'] = monitor.appVersion;
+            }
+            if (monitor.hostname) {
+                query['hostname'] = monitor.hostname;
+            }
+            if (monitor.osName) {
+                query['os.name'] = new RegExp(monitor.osName, 'ig');
+            }
+            var toTime = new Date();
+            if (req.body.toUTCTime) {
+                toTime = new moment(req.body.toUTCTime).toDate();
+            }
+            var fromTime = new Date(toTime.getTime() - 24 * 60 * 60 * 1000); //default search 1 day
+            if (req.body.fromUTCTime) {
+                fromTime = new moment(req.body.fromUTCTime).toDate();
+            }
+            query['createTime'] = {
+                $gte: fromTime, $lte: toTime
+            }
+
+            Metric.mapReduceQuery(
+                query,
+                function (error, results) {
+                    if (error) {
+                        return next(error);
+                    }
+
+                    res.render('monitors/monitor', {
+                        monitor: monitor,
+                        body: req.body,
+                        stats: results,
+                        unit: bestTimeUnit(fromTime, toTime)
+                    });
+                },
+                mapFuns.metric5MMap,
+                monitor.type == 'time' ? reduceFuns.timeMetricReduce : reduceFuns.countMetricReduce
+            );
+
+        }
+    );
+};
+
+router.get('/:id/detail', loadMonitorResult);
+router.post('/:id/detail', loadMonitorResult);
 
 router.post('/q', function(req, res, next) {
     var Monitor = mongooseHelper.getModel('Monitor');
