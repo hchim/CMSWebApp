@@ -86,7 +86,8 @@ router.post('/:tag/q', function(req, res, next) {
             if (error) {
                 return next(error);
             }
-            if (!req.query.page) {
+
+            if (!req.query.page && metrics.length > 0) {
                 Metric.mapReduceQuery(
                     query,
                     function (error, results) {
