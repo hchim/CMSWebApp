@@ -1,2 +1,6 @@
 {
+    mongodb: {
+        endpoint: "mongodb://10.0.254.10/",
+        dbs: ['cmsdb', 'appinfodb', 'sleepdb', 'identitydb', 'metricdb']
+    }
 }
