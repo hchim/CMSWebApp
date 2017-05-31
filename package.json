@@ -19,9 +19,9 @@
     "uuid": "*",
     "bcrypt": "~1.0.2",
     "moment": "~2.18.1",
-    "appinfoservicemodels": "git+ssh://git@git.sleepaiden.com:service-infrastructure/AppInfoServiceModels.git",
-    "identityservicemodels": "git+ssh://git@git.sleepaiden.com:service-infrastructure/IdentityServiceModels.git",
-    "sleepservicemodels": "git+ssh://git@git.sleepaiden.com:service-infrastructure/sleepservicemodels.git",
-    "metricservicemodels": "git+ssh://git@git.sleepaiden.com:service-infrastructure/metricservicemodels.git"
+    "appinfoservicemodels": "git@github.com:hchim/AppInfoServiceModels.git",
+    "identityservicemodels": "git@github.com:hchim/IdentityServiceModels.git",
+    "sleepservicemodels": "git@github.com:hchim/SleepServiceModels.git",
+    "metricservicemodels": "git@github.com:hchim/MetricServiceModels.git"
   }
 }
