@@ -1,0 +1,13 @@
+<input type="hidden" name="_id" value="{{app._id}}">
+<div class="form-group">
+    <label for="inputPackageName" class="col-sm-3 control-label">Package Name</label>
+    <div class="col-sm-9">
+        {{app.packageName}}
+    </div>
+</div>
+<div class="form-group">
+    <label for="inputSHA256" class="col-sm-3 control-label">SHA256 Hash</label>
+    <div class="col-sm-9">
+        <input type="text" class="form-control" id="inputSHA256" name="sha256Sig" value="{{packageName}}" placeholder="SHA256 Hash">
+    </div>
+</div>

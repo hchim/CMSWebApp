@@ -1,0 +1,30 @@
+<h1 class="page-header">Application Management</h1>
+<a href="javascript:showModal('/apps/add');">Add</a>
+
+<h2 class="sub-header">App Lists</h2>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>App Name</th>
+            <th>Platform</th>
+            <th>Package Name</th>
+            <th>Create Time</th>
+            <th>Operations</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each apps}}
+            <tr>
+                <td>{{@index}}</td>
+                <td>{{this.appName}}</td>
+                <td>{{this.platform}}</td>
+                <td>{{this.packageName}}</td>
+                <td>{{this.createTime}}</td>
+                <td>Delete | <a href="javascript:showModal('/apps/{{this._id}}/generate');">Generate API Key</a></td>
+            </tr>
+        {{/each}}
+        </tbody>
+    </table>
+</div>

@@ -40,6 +40,7 @@ module.exports = {
             conn = connections[APPINFO_DB] = mongoose.connection.useDb(APPINFO_DB);
             models['Suggestion'] = require('appinfoservicemodels').Suggestion(conn);
             models['AppConfig'] = require('appinfoservicemodels').AppConfig(conn);
+            models['AppInfo'] = require('appinfoservicemodels').AppInfo(conn);
 
             conn = connections[SLEEP_DB] = mongoose.connection.useDb(SLEEP_DB);
             models['BabyInfo'] = require('sleepservicemodels').BabyInfo(conn);
