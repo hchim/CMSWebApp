@@ -21,6 +21,7 @@ var APPINFO_DB = 'appinfodb';
 var SLEEP_DB = 'sleepdb';
 var IDENTITY_DB = 'identitydb';
 var METRIC_DB = 'metricdb';
+var GOODYBAG_DB = 'goodybagdb';
 
 module.exports = {
     init: function () {
@@ -55,6 +56,10 @@ module.exports = {
             models['Metric'] = require('metricservicemodels').Metric(conn);
             models['Monitor'] = require('metricservicemodels').Monitor(conn);
             models['Task'] = require('metricservicemodels').Task(conn);
+
+            conn = connections[GOODYBAG_DB] = mongoose.connection.useDb(GOODYBAG_DB);
+            models['Product'] = require('goodybagmodels').Product(conn);
+            models['Catalog'] = require('goodybagmodels').Catalog(conn);
         });
     },
     getCMSConn : function() { return connections[CMS_DB] },
@@ -62,5 +67,8 @@ module.exports = {
     getSleepConn: function() { return connections[SLEEP_DB] },
     getIdentityConn : function() { return connections[IDENTITY_DB] },
     getMetricConn : function() { return connections[METRIC_DB] },
+    getGoodyBagConn: function () {
+        return connections[GOODYBAG_DB];
+    },
     getModel: function (modelName) {return models[modelName]}
 }

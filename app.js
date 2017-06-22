@@ -15,6 +15,8 @@ var authenticate = require('./middlewares/authenticate');
 var metrics = require('./routes/metrics');
 var monitors = require('./routes/monitors');
 var appInfos = require('./routes/appinfos');
+var products = require('./routes/products');
+var catalogs = require('./routes/catalogs');
 var hbsHelpers = require('./utils/HBSHelpers');
 
 var app = express();
@@ -55,6 +57,8 @@ app.use('/admins', adminUsers);
 app.use('/metrics', metrics);
 app.use('/monitors', monitors);
 app.use('/apps', appInfos);
+app.use('/products', products);
+app.use('/catalogs', catalogs);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

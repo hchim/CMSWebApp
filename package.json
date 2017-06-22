@@ -22,6 +22,7 @@
     "appinfoservicemodels": "git@github.com:hchim/AppInfoServiceModels.git",
     "identityservicemodels": "git@github.com:hchim/IdentityServiceModels.git",
     "sleepservicemodels": "git@github.com:hchim/SleepServiceModels.git",
-    "metricservicemodels": "git@github.com:hchim/MetricServiceModels.git"
+    "metricservicemodels": "git@github.com:hchim/MetricServiceModels.git",
+    "goodybagmodels": "git@github.com:hchim/GoodyBagModels.git"
   }
 }

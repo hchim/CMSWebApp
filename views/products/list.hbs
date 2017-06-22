@@ -1,0 +1,35 @@
+<h1 class="page-header">Product Management</h1>
+<a href="javascript:showModal('/products/add');">Add Product</a> |
+<a href="javascript:showModal('/catalogs/add');">Add Catalog</a>
+
+<h2 class="sub-header">Product Lists</h2>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Catalog</th>
+            <th>Product Name</th>
+            <th>List Price</th>
+            <th>Purchase Price</th>
+            <th>Quantity</th>
+            <th>Enabled</th>
+            <th>Operations</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each products}}
+            <tr>
+                <td>{{@index}}</td>
+                <td>{{this._catalog.displayName}}</td>
+                <td>{{this.displayName}}</td>
+                <td>${{this.listPrice}}</td>
+                <td>${{this.purchasePrice}}</td>
+                <td>{{this.quantity}}</td>
+                <td>{{this.enabled}}</td>
+                <td>Delete | <a href="javascript:showModal('/products/{{this._id}}/edit');">Edit</a></td>
+            </tr>
+        {{/each}}
+        </tbody>
+    </table>
+</div>
