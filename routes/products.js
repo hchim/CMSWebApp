@@ -4,6 +4,23 @@ var mongooseHelper = require('../utils/MongooseHelper');
 
 const n_per_page = 10;
 
+router.get('/deleted', function (req, res, next) {
+    var Product = mongooseHelper.getModel('Product');
+    var page = 0;
+    if (req.query.page) {
+        page = parseInt(req.query.page)
+    }
+
+    Product.find({status: 'Deleted'})
+        .sort({ createDate: -1 })
+        .skip(page * n_per_page)
+        .limit(n_per_page)
+        .populate('_catalog')
+        .exec(function (err, products) {
+            res.render('products/deleted_list', { products: products});
+        });
+})
+
 router.get('/', function (req, res, next) {
     var Product = mongooseHelper.getModel('Product');
     var page = 0;
@@ -11,7 +28,7 @@ router.get('/', function (req, res, next) {
         page = parseInt(req.query.page)
     }
 
-    Product.find({})
+    Product.find({status: {$ne : 'Deleted'}})
         .sort({ createDate: -1 })
         .skip(page * n_per_page)
         .limit(n_per_page)

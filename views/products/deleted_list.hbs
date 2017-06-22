@@ -1,7 +1,4 @@
-<h1 class="page-header">Product Management</h1>
-<a href="javascript:showModal('/products/add');">Add Product</a> |
-<a href="javascript:showModal('/catalogs/add');">Add Catalog</a> |
-<a href="javascript:load('/products/deleted');">Deleted Products</a>
+<h1 class="page-header">Deleted Products</h1>
 
 <h2 class="sub-header">Product Lists</h2>
 <div class="table-responsive">
@@ -14,7 +11,6 @@
             <th>List Price</th>
             <th>Purchase Price</th>
             <th>Quantity</th>
-            <th>Status</th>
             <th>Operations</th>
         </tr>
         </thead>
@@ -27,11 +23,7 @@
                 <td>${{this.listPrice}}</td>
                 <td>${{this.purchasePrice}}</td>
                 <td>{{this.quantity}}</td>
-                <td>{{this.status}}</td>
-                <td>
-                    <a href="javascript:showModal('/products/{{this._id}}/delete');">Delete</a> |
-                    <a href="javascript:showModal('/products/{{this._id}}/edit');">Edit</a>
-                </td>
+                <td><a href="javascript:showModal('/products/{{this._id}}/edit');">Restore</a></td>
             </tr>
         {{/each}}
         </tbody>
