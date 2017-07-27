@@ -7,10 +7,7 @@ module.exports = {
     {
       name: "CMSWebApp",
       script: "./bin/www",
-      env_development: {
-        NODE_ENV: "development"
-      },
-      env_production : {
+      env: {
         NODE_ENV: "production"
       },
       watch: false,
