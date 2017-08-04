@@ -26,10 +26,19 @@ function eq(val1, val2) {
     return val1 == val2;
 }
 
+function defaultVal(val, defaultVal) {
+    if (val) {
+        return val;
+    }
+
+    return defaultVal;
+}
+
 module.exports = {
     registerHelpers: function(hbs) {
         hbs.registerHelper('renderJson', renderJson),
-        hbs.registerHelper('formatMetricStatsResult', formatMetricStatsResult)
+        hbs.registerHelper('formatMetricStatsResult', formatMetricStatsResult),
+        hbs.registerHelper('defaultVal', defaultVal),
         hbs.registerHelper('eq', eq);
     }
 }
