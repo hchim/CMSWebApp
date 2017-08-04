@@ -25,7 +25,7 @@ router.get('/', function(req, res, next) {
             return next(error);
         }
         res.render('metrics/list', { metrics: metrics});
-    });
+    }, req.query.page, 10);
 });
 
 router.post('/q', function(req, res, next) {
@@ -35,7 +35,7 @@ router.post('/q', function(req, res, next) {
     }, function(error, metrics) {
         if (error) return next(error);
         res.render('metrics/list', { metrics: metrics});
-    });
+    }, req.query.page, 10);
 });
 
 // List the records of the specified tag
