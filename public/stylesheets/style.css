@@ -86,3 +86,7 @@ body {
 #hoursSlider {
     width: 100px;
 }
+
+input:invalid {
+    border: 2px dashed red;
+}

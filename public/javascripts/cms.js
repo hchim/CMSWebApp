@@ -12,6 +12,10 @@ function load(url) {
  */
 function loadFormResult(formId) {
     var form = $('#' + formId);
+    if (!validateForm(formId)) {
+        return;
+    }
+
     $.ajax({
         data: form.serialize(),
         type: form.attr('method'),
@@ -38,4 +42,44 @@ function show(id) {
 
 function hide(id) {
     $('#' + id).addClass('hide').removeClass('show');
+}
+
+function validateForm(formid) {
+    var form = document.getElementById(formid);
+    for(var i = 0; i < form.elements.length; i++){
+        if (!validateInput(form.elements[i])) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+function validateInput(element) {
+    if(element.value === '' && element.hasAttribute('required')){
+        showMessage('Warning', 'Please fill the required fields!', 'danger');
+        return false;
+    }
+    //TODO add other validations here
+    return true;
+}
+
+
+function showMessage(header, message, type) {
+    if (header) {
+        $("#alertHeader").html(header);
+    }
+
+    $("#alertMessage").html(message);
+    if (type === 'warn') {
+        $("#alertMessage").addClass('alert-warning');
+    } else if (type === 'success') {
+        $("#alertMessage").addClass('alert-success');
+    } else if (type === 'info') {
+        $("#alertMessage").addClass('alert-info');
+    } else {
+        $("#alertMessage").addClass('alert-danger');
+    }
+
+    $('#alertModal').modal("show");
 }

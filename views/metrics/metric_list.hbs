@@ -26,12 +26,12 @@
             <option value="A">After</option>
         </select>
         <div class='input-group date' id='dateTimePicker'>
-            <input type='datetime' class="form-control" name="time" value="{{body.time}}"/>
+            <input type='datetime' class="form-control" name="time" value="{{body.time}}" required/>
             <span class="input-group-addon">
                 <span class="glyphicon glyphicon-calendar"></span>
             </span>
         </div>
-        <input type="hidden" id="inputUtcTime" name="utcTime" value="{{body.utcTime}}">
+        <input type="hidden" id="inputUtcTime" name="utcTime" value="{{body.utcTime}}" required/>
     </div>
     <button type="button" onclick="loadFormResult('metricQueryForm')" class="btn btn-primary">Search</button>
 </form>
